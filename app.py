@@ -21,10 +21,10 @@ def ip():
     return jsonify({'ip': request.environ['REMOTE_ADDR']})
 
 #Static Files
-@app.route('/src/<path:filepath>')
-def data(filepath):
-    print(filepath)
-    return send_from_directory('data', '/src'+filepath)
+@app.route('/src/<path:filename>')
+def download_file(filename):
+    print('----FILE REQUESTED: src/', filename)
+    return send_from_directory('src/', filename)
 
 # URL Routes
 @app.route('/')
@@ -39,6 +39,7 @@ def admin():
         return render_template('login.html')
     else:
         return(render_template('admin/index.html'))
+        
 @app.route('/chat')
 def chat():
     if not session.get('logged_in'):
