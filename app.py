@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, jsonify, redirect, url_for, render_template,session, abort
+from flask import Flask, Response, request, jsonify, redirect, url_for, render_template,session, abort, send_from_directory
 from flask_socketio import SocketIO, emit
 from datetime import datetime
 import pymongo
@@ -13,7 +13,7 @@ mongo = pymongo.MongoClient( os.environ['DB_PORT_27017_TCP_ADDR'],27017)
 db = mongo['db1']
 creds = db["creds"]
 messages = db["messages"]
-
+user = db["user"]
 
 #sanity check 
 @app.route("/ip")
@@ -21,9 +21,10 @@ def ip():
     return jsonify({'ip': request.environ['REMOTE_ADDR']})
 
 #Static Files
-""" @app.route("/static/<path:path>")
-def static_send(path):
-    return app.send_static_file() """
+@app.route('/src/<path:filepath>')
+def data(filepath):
+    print(filepath)
+    return send_from_directory('data', '/src'+filepath)
 
 # URL Routes
 @app.route('/')
@@ -32,13 +33,25 @@ def index():
         return render_template('login.html')
     else:
         return(render_template('index.html'))
+@app.route('/admin')
+def admin():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('admin/index.html'))
+@app.route('/chat')
+def chat():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('chat.html'))
 
 @app.route('/login', methods=['POST','GET'])
 def login():
     if request.method=='GET':
         return redirect(url_for('index'))
     else:
-        if creds.count_documents({'username':str(request.form['username']), 'password':str(request.form['password'])})==1:
+        if user.count_documents({'username':str(request.form['username']), 'pin':str(request.form['password'])})==1:
             session['logged_in'] = True
             session['username'] = str(request.form['username'])
             return(redirect(url_for('index')))
@@ -50,6 +63,12 @@ def logout():
     session.clear()
     return(redirect(url_for('index')))
 
+@app.route('/api/<string:username>/<string:time>')
+def api_meds(username, time):
+    global user
+    meds = user.find_one({'username':username})
+    meds['medtime'][time]
+    return jsonify(meds['medtime'][time][0])
 
  # WebSocket Routes 
 @socketio.on('connect', namespace='/test')

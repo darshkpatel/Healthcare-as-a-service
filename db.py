@@ -10,21 +10,26 @@ messages = db["messages"]
 user = db["user"]
 
 
-u1 = {'name': 'Mr. Shah',
+u1 = {'name': 'Ms. Shah',
+      'username': 'darsh',
+      'pin': 'darsh',
       'DOB': '20-5-1960',
       'Age': '58',
       'allergies': ['peanut', 'ThyPhenol'],
-      'Blood Group', 'B+',
+      'Blood Group': 'B+',
       'visits': [
-          {'date': datetime.date(11,9,18)
+          {'date': '11-8-2018',
            'reason': 'Ankle Pain',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['crocin', 'metaflax']
           }
-          ]
-      'meds': [
-          {'name': 'crocin',
-            'reason': 'knee pain',
-            'time': ['morning', 'afternoon']}
-          ]
+          ],
+      'medtime': {
+          'night':  [{'name': 'RolFlax','reason': 'knee pain'}]
+
+      }
+      
+      
+      
+    
       }
