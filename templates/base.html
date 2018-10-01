@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Flask Test</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        {% block head %} {% endblock %}
+    </head>
+    <body>
+<!-- BEGIN NAV -->
+<!-- TODO:
+ - Make Responsive
+-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="./">Logo</a>
+        
+        <!-- Links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 2</a>
+          </li>
+          {% if session['logged_in'] %}
+          <li class="nav-item">
+              <a class="nav-link" href="./logout">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+              <a class="nav-link" href="./login">Login</a>
+            </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+ <!-- END NAV -->
+        <div class="container-fluid">
+            
+            {% block body %} {% endblock %}
+        </div>
+
+    </body>
+    
+</html>

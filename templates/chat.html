@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block head %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+    socket.on('cnct', function(data) {
+        $('#status').append('Connected as '+data.msg);
+        console.log('connected');
+    });
+    socket.on('newcnct', function(data) {
+        $('#log').append('<li> ---- User: '+ data.msg + ' Connected ----</li>');
+    });
+    $('form#emitform').submit(function(){
+        console.log( 'sending' ,$('#emit').val());
+        socket.emit('emit_msg', $('#emit').val());
+        $('#emit').val("")
+        return false
+    })
+    $('form#broadcastform').submit(function(){
+        console.log( 'sending' ,$('#broadcast').val());
+        socket.emit('broadcast_msg', $('#broadcast').val());
+        $('#broadcast').val("")
+        return false
+    })
+    socket.on('log_msg', function(data) {
+        $('#log').append('<li>'+ data.msg + '</li>');
+        console.log('Appended', data.msg)
+    });
+    socket.on('exit', function(data) {
+        $('#log').append('<li> ---- User:'+ data.msg + ' disconnected ----</li>');
+        console.log('Appended', data.msg)
+    });
+});
+</script>
+{% endblock %}
+
+
+{% block body %}
+        <style>
+            .jumbotron { 
+                background-color: #f4511e; /* Orange */
+                color: #ffffff;
+            }
+            </style>
+            
+            <body>
+                <div id="username" > </div>
+              <div class="jumbotron text-center">
+                <h1>Sockets Test</h1> 
+                <p id="status">Status: </p> 
+                <div class="row">
+                        <div class="col-md-4 col-md-offset-4"></div>
+                <div class="col-md-4 col-md-offset-4">
+<!--                 <form class="form-inline form" id="emitform" autocomplete="off" >
+                    <div class="input-group">
+                      <input type="text" class="form-control" size="50" id="emit" placeholder="Emmit Message  ">
+                      <div class="input-group-btn">
+                        <button type="button"  class="btn btn-danger">Submit</button>
+                      </div>
+                    </div>
+                  </form> -->
+                  <form class="form-inline" id="broadcastform" autocomplete="off" >
+                        <div class="input-group">
+                          <input type="text" class="form-control" size="50" id="broadcast" placeholder="Broadcast Message  ">
+                          <div class="input-group-btn">
+                            <button type="submit"  class="btn btn-danger">Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+              </div></div>
+
+              <div class="h2">Log:</div>
+              <ul class="list-unstyled" id="log">
+
+              </ul>
+{% endblock %}
+</html>
