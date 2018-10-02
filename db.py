@@ -23,21 +23,24 @@ u1 = {'name': 'Ms. Shah',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['crocin', 'metaflax'],
            'future': 'false',
-           'cost': '800'
+           'cost': '800',
+           'txn': 'abcd'
           },
           {'date': '18-7-2018',
            'reason': 'Stomach Upset',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['Roflax'],
            'future': 'false',
-           'cost': '760'
+           'cost': '760',
+           'txn': 'asas'
           },
           {'date': '1-1-2018',
            'reason': 'Cataract Surgery',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['Roflax'],
            'future': 'false',
-           'cost': '13000'
+           'cost': '13000',
+           'txn': 'axax'
           },
 
           ],
@@ -48,5 +51,5 @@ u1 = {'name': 'Ms. Shah',
       
     
       }
-
+user.delete_one({'username':'darsh'})
 user.insert_one(u1)

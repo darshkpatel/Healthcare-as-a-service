@@ -72,6 +72,11 @@ def update():
     old.append({'name': name, 'time': time, })
     user.update_one({'username':username} ,{'$set' : {'meds': old}})
     return(redirect(url_for('index')))
+@app.route('/api/alexa', methods=['GET'])
+def alexa():
+    username = 'darsh'
+    meds = user.find_one({'username':username})['meds']
+    return(jsonify(meds))
 
 @app.route('/api/remove/<string:medname>', methods=['GET'])
 def remove(medname):
@@ -128,6 +133,56 @@ def log_broadcast(message):
 def test_disconnect():
     emit('exit', {'msg': str( session['username']) }, broadcast=True)
     print('Client disconnected')
+
+
+
+
+
+############# primitive BLOCKCHAIN ##########
+import hashlib as hasher
+import datetime
+class Block:
+  def __init__(self, index, timestamp, data, previous_hash):
+    self.index = index
+    self.timestamp = timestamp
+    self.data = data
+    self.previous_hash = previous_hash
+    self.hash = self.hash_block()
+  
+  def hash_block(self):
+    sha = hasher.sha256()
+    sha.update((str(self.index) + 
+               str(self.timestamp) + 
+               str(self.data) + 
+               str(self.previous_hash)).encode())
+    return sha.hexdigest()
+def create_genisis_block():
+    return Block(0,datetime.datetime.now(), "Genesis Block", "0")
+
+def next_block(last_block, data):
+  this_index = last_block.index + 1
+  this_timestamp = datetime.datetime.now()
+  this_data = data + str(this_index)
+  this_hash = last_block.hash
+  return Block(this_index, this_timestamp, this_data, this_hash)
+
+def verify_blockchain(blockchain):
+    for index in range(len(blockchain)):
+        block = blockchain[index]
+        if block.index==0:
+            continue
+        if(block.previous_hash != blockchain[index-1].hash):
+            print("WARNING: Blockchain has been compromised at block {}".format(index-1))
+    print("Blockchain Integrity Check Passed !")
+
+blockchain = [ create_genisis_block() ]
+previous_block = blockchain[0]
+
+""" block_to_add = next_block(previous_block)
+blockchain.append(block_to_add)
+previous_block = block_to_add """
+
+
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=80, debug=True)
