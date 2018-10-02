@@ -9,9 +9,14 @@
       <div class="col-md-4 col-md-offset-4">
                 {% if t %}
                 <div class="alert alert-info">
-                  Transaction ID Valid. <br>
-                  Cost: {{ t }}
-                  Medicines: {{ m }}
+                  Verified on Block with index #{{ bindex }} and hash:
+
+                  <br>
+                  {{ bhash }}
+                  <br>
+                  Cost: {{ t['cost'] }}
+                  <br>
+                  Medicines:   {% for med in t['medicines'] %}  {{ med }}  {% endfor %}
                 </div>
                 {% elif e %}
                 <div class="alert alert-warning">
