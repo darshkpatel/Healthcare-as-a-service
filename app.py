@@ -99,6 +99,26 @@ def login():
         else:
             return(render_template('login.html', error=True))
 
+@app.route('/api/blockchain', methods=['GET'])
+def blockchain():
+
+    data = []
+    for block in blockchain:
+        data.append({'data':block.data,'hash':str(block.hash), 'previous_hash':str(block.previous_hash)})
+    return(jsonify(data))
+
+@app.route('/block', methods=['GET', 'POST'])
+def block_verify():
+    if request.method=='GET':
+        return(render_template('block.html'))
+    else:
+        txid = request.form['tid']
+        for block in blockchain:
+            if block.data['txn']==txid and verify_blockchain(blockchain):
+                return(render_template('block.html', t=str(block.data)))
+                break
+            
+       
 
 
 @app.route('/logout')
@@ -162,7 +182,7 @@ def create_genisis_block():
 def next_block(last_block, data):
   this_index = last_block.index + 1
   this_timestamp = datetime.datetime.now()
-  this_data = data + str(this_index)
+  this_data = data
   this_hash = last_block.hash
   return Block(this_index, this_timestamp, this_data, this_hash)
 
@@ -173,10 +193,18 @@ def verify_blockchain(blockchain):
             continue
         if(block.previous_hash != blockchain[index-1].hash):
             print("WARNING: Blockchain has been compromised at block {}".format(index-1))
+            return False
     print("Blockchain Integrity Check Passed !")
+    return True
 
-blockchain = [ create_genisis_block() ]
-previous_block = blockchain[0]
+def generate():
+    global blockchain
+    global previous_block
+    for visit in user.find_one({'username':'darsh'})['visits']:
+        block_to_add = next_block(previous_block, visit)
+        blockchain.append(block_to_add)
+        previous_block = block_to_add 
+
 
 """ block_to_add = next_block(previous_block)
 blockchain.append(block_to_add)
@@ -185,4 +213,8 @@ previous_block = block_to_add """
 
 
 if __name__ == "__main__":
+    blockchain = [ create_genisis_block() ]
+    previous_block = blockchain[0]
+
+    generate()
     socketio.run(app, host='0.0.0.0', port=80, debug=True)

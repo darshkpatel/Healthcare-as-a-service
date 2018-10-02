@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+                {% if t %}
+                <div class="alert alert-info">
+                  Transaction ID Valid. 
+                </div>
+                {{ t }}
+                {% endif %}
+                      <h3>  Verify Transaction :</h3>
+                        <table class="table">
+                                
+                        <thead>
+                                        <tr>
+                                          <th>Transaction Id</th>
+                                          <th></th>
+                                        </tr>
+                                      </thead>                        <tbody>
+
+<tr>
+        <form method="post" action="./block">
+                <td><input type="input" name='tid' placeholder="Transaction ID">
+         
+
+        <td><button type='submit' class="btn btn-sm btn-primary" value="Submit">  Verify  </button></td>
+
+        </form>
+</tr>
+        </tbody>
+
+        </table>
+                
+                </div>
+{% endblock %}
