@@ -5,18 +5,18 @@
 
 <div class="container-fluid">
   <div class="row">
-      <div class="col-md-4 col-md-offset-4"></div>
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-4 col-md-offset-3"></div>
+      <div class="col-md-4 col-md-offset-5">
                 {% if t %}
                 <div class="alert alert-info">
-                  Verified on Block with index #{{ bindex }} and hash:
+                  <h4 class="align-right"><b>Verified </b> </h4> <br>On Block with index #{{ bindex }} and hash:
 
                   <br>
                   {{ bhash }}
                   <br>
-                  Cost: {{ t['cost'] }}
+                 <b>Cost:</b>  {{ t['cost'] }}
                   <br>
-                  Medicines:   {% for med in t['medicines'] %}  {{ med }}  {% endfor %}
+                  <b>Medicines:</b>   {% for med in t['medicines'] %}  {{ med }}  {% endfor %}
                 </div>
                 {% elif e %}
                 <div class="alert alert-warning">

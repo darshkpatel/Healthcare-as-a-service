@@ -51,14 +51,6 @@ $(document).ready(function(){
                 <div class="row">
                         <div class="col-md-4 col-md-offset-4"></div>
                 <div class="col-md-4 col-md-offset-4">
-<!--                 <form class="form-inline form" id="emitform" autocomplete="off" >
-                    <div class="input-group">
-                      <input type="text" class="form-control" size="50" id="emit" placeholder="Emmit Message  ">
-                      <div class="input-group-btn">
-                        <button type="button"  class="btn btn-danger">Submit</button>
-                      </div>
-                    </div>
-                  </form> -->
                   <form class="form-inline" id="broadcastform" autocomplete="off" >
                         <div class="input-group">
                           <input type="text" class="form-control" size="50" id="broadcast" placeholder="Send Message  ">
@@ -70,9 +62,10 @@ $(document).ready(function(){
                     </div>
               </div></div>
 
-              <div class="h2">Messages:</div>
+              <div class="h3">Messages:</div>
+              <br>
               <ul class="list-unstyled" id="log">
-
+                    
               </ul>
 {% endblock %}
 </html>

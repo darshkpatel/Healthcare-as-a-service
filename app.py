@@ -3,8 +3,8 @@ from flask_socketio import SocketIO, emit
 from datetime import datetime
 import pymongo
 import os
-
-
+import hashlib as hasher
+import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -25,19 +25,30 @@ def ip():
 def download_file(filename):
     print('----FILE REQUESTED: src/', filename)
     return send_from_directory('src/', filename)
+"""
 
-# URL Routes
+
+
+ URL ROUTES 
+
+
+
+"""
+#index
 @app.route('/')
 def index():
     if not session.get('logged_in'):
         return render_template('login.html')
     elif session['username']=='darsh':
         meds =  user.find_one({'username':'darsh'})['meds']
-        return(render_template('index-p.html', username=session['username'], meds = meds))
+        return(render_template('index-p.html', username=session['username'], meds = meds)) #medicine table 
     elif session['username']=='doctor':
         pt = user.find_one({'username':'darsh'})
         meds =  pt['meds']
-        return(render_template('index-d.html', username=session['username'], meds = meds, pt=pt))
+        return(render_template('index-d.html', username=session['username'], meds = meds, pt=pt)) #medicines and paitent detailss 
+
+
+#P2P Chat
 
 @app.route('/chat')
 def chat():
@@ -46,6 +57,8 @@ def chat():
     else:
         return(render_template('chat.html'))
 
+
+# Charts
 @app.route('/charts')
 def chart():
     if not session.get('logged_in'):
@@ -53,6 +66,9 @@ def chart():
     else:
         return(render_template('charts.html'))
 
+
+
+# Historical Records
 @app.route('/past')
 def past():
     if not session.get('logged_in'):
@@ -62,32 +78,40 @@ def past():
         visits = pt['visits']
         return(render_template('visits.html',visit=visits,username=session['username']  ))
 
+
+
+
+# update medicines
 @app.route('/api/update', methods=['POST'])
 def update():
-    username = 'darsh'
+    username = 'darsh' #placeholdler for DB query for mulltiple users
     name = request.form['name']
     time = request.form['time']
-   # reason = request.form['reason']
     old = user.find_one({'username':username})['meds']
     old.append({'name': name, 'time': time })
     user.update_one({'username':username} ,{'$set' : {'meds': old}})
     return(redirect(url_for('index')))
+
+ # update treatment visit    
 @app.route('/api/updatevisit', methods=['POST'])
 def updatevisit():
-    username = 'darsh'
-   # reason = request.form['reason']
+    username = 'darsh' #placeholdler for DB query for mulltiple users
     old = user.find_one({'username':username})['visits']
     old.append({'date':request.form['date'], 'reason':request.form['reason'], 'description':request.form['description'], 'medicines':[request.form['medicines']], 'cost': request.form['cost'], 'txn':request.form['txn']})
     user.update_one({'username':username} ,{'$set' : {'visits': old}})
     generate()
     return(redirect(url_for('past')))
 
+
+
+# Send prescribed apps , Alexa Endpoint 
 @app.route('/api/alexa', methods=['GET'])
 def alexa():
     username = 'darsh'
     meds = user.find_one({'username':username})['meds']
     return(jsonify(meds))
 
+# Delete Medicine
 @app.route('/api/remove/<string:medname>', methods=['GET'])
 def remove(medname):
     username = 'darsh'
@@ -96,27 +120,30 @@ def remove(medname):
     user.update_one({'username':username} ,{'$set' : {'meds': old}})
     return(redirect(url_for('index')))
 
-
+# Login Check 
 @app.route('/login', methods=['POST','GET'])
 def login():
     if request.method=='GET':
         return redirect(url_for('index'))
     else:
-        if user.count_documents({'username':str(request.form['username']), 'pin':str(request.form['password'])})==1:
+        if user.count_documents({'username':str(request.form['username']), 'pin':str(request.form['password'])})==1: 
             session['logged_in'] = True
             session['username'] = str(request.form['username'])
             return(redirect(url_for('index')))
         else:
             return(render_template('login.html', error=True))
 
+
+# Returns the current blockchain 
 @app.route('/api/blockchain', methods=['GET'])
 def blockchain():
-
     data = []
     for block in blockchain:
         data.append({'data':block.data,'hash':str(block.hash), 'previous_hash':str(block.previous_hash)})
     return(jsonify(data))
 
+
+#Verifies Existance in Blockchain 
 @app.route('/block', methods=['GET', 'POST'])
 def block_verify():
     if request.method=='GET':
@@ -124,17 +151,18 @@ def block_verify():
     else:
         txid = request.form['tid']
         for x in range(1,len(blockchain)):
-            if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):
+            if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):  # verifies blockchain integrity 
                 return(render_template('block.html', t=dict(blockchain[x].data), bhash=blockchain[x].hash, bindex=blockchain[x].index))
         return(render_template('block.html', e='e'))        
             
        
 
-
+# logout 
 @app.route('/logout')
 def logout():
     session.clear()
     return(redirect(url_for('index')))
+
 
 @app.route('/api/<string:username>/<string:time>')
 def api_meds(username, time):
@@ -142,6 +170,19 @@ def api_meds(username, time):
     meds = user.find_one({'username':username})
     
     return jsonify(meds['medtime'][time][0])
+
+
+
+
+
+
+"""
+
+
+ WEBSOCKET ROUTES  
+
+
+"""
 
  # WebSocket Routes 
 @socketio.on('connect', namespace='/test')
@@ -169,8 +210,9 @@ def test_disconnect():
 
 
 ############# primitive BLOCKCHAIN ##########
-import hashlib as hasher
-import datetime
+
+
+
 class Block:
   def __init__(self, index, timestamp, data, previous_hash):
     self.index = index
@@ -186,6 +228,8 @@ class Block:
                str(self.data) + 
                str(self.previous_hash)).encode())
     return sha.hexdigest()
+
+
 def create_genisis_block():
     return Block(0,datetime.datetime.now(), "Genesis Block", "0")
 
@@ -214,13 +258,6 @@ def generate():
         block_to_add = next_block(previous_block, visit)
         blockchain.append(block_to_add)
         previous_block = block_to_add 
-
-
-""" block_to_add = next_block(previous_block)
-blockchain.append(block_to_add)
-previous_block = block_to_add """
-
-
 
 if __name__ == "__main__":
     blockchain = [ create_genisis_block() ]
