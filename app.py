@@ -113,10 +113,10 @@ def block_verify():
         return(render_template('block.html'))
     else:
         txid = request.form['tid']
-        for block in blockchain:
-            if block.data['txn']==txid and verify_blockchain(blockchain):
-                return(render_template('block.html', t=str(block.data)))
-                break
+        for x in range(1,len(blockchain)):
+            if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):
+                return(render_template('block.html', t=str(blockchain[x].data['cost'])))
+        return(render_template('block.html',t=str(blockchain[1].data['txn'])))        
             
        
 

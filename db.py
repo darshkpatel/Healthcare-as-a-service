@@ -22,7 +22,7 @@ u1 = {'name': 'Ms. Shah',
            'reason': 'Ankle Pain',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['crocin', 'metaflax'],
-           'future': 'false',
+
            'cost': '800',
            'txn': 'abcd'
           },
@@ -30,7 +30,7 @@ u1 = {'name': 'Ms. Shah',
            'reason': 'Stomach Upset',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['Roflax'],
-           'future': 'false',
+
            'cost': '760',
            'txn': 'asas'
           },
@@ -38,7 +38,7 @@ u1 = {'name': 'Ms. Shah',
            'reason': 'Cataract Surgery',
            'description': 'Long description on doctors analysis and conclusion',
            'medicines': ['Roflax'],
-           'future': 'false',
+
            'cost': '13000',
            'txn': 'axax'
           },

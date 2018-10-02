@@ -20,6 +20,7 @@
                                           <th>medicines</th>
                                           <th>cost</th>
                                           <th>description</th>
+                                          <th>T-ID</th>
 
                                         </tr>
                                       </thead>                        <tbody>
@@ -30,6 +31,7 @@
                             <td>{% for md in v['medicines'] %} {{ md }} &NonBreakingSpace; {% endfor %} </td>
                             <td>{{ v['cost'] }}</td>
                             <td>{{ v['description'] }}</td>
+                            <td>{{ v['txn'] }}</td>
                           </tr>  
             {% endfor %}
         </tbody>
