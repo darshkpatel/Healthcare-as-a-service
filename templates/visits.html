@@ -36,7 +36,7 @@
                             <td></td>
                           </tr>  
             {% endfor %}
-            {% if session['username'] is doctor %}
+            {% if session['username'] == 'doctor' %}
             <tr>
                <!--  <form method="post" action="/api/updatevisit"> -->
                 <form method="post" action="">
