@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+               
+                        <span class="h1"> Hey , {{username}}</span>
+                        <hr>
+                        <table class="table table-striped">
+                                
+                                        <thead>
+                                                        <tr>
+                                                          <th>Paitent info</th>
+                                                          <th>Value</th>
+                                                        </tr>
+                                                      </thead>                        <tbody>
+
+                                                        <tr>
+                                                                <td>Name</td>
+                                                                <td>Darsh</td>
+                                                                
+                                                        </tr>
+
+                                                        <tr>
+                                                                <td>DOB</td>
+                                                                <td>20-5-1960</td>
+                                                                
+                                                        </tr>
+
+                                                        <tr>
+                                                                <td>AGE</td>
+                                                                <td>58</td>
+                                                                
+                                                        </tr>
+                                                        <tr>
+                                                                <td>allergies</td>
+                                                                <td>peanuts, ThyPhenol</td>
+                                                                
+                                                        </tr>
+                                                        <tr>
+                                                                <td>Blood Group</td>
+                                                                <td>B+</td>
+                                                                
+                                                        </tr>
+
+                                                      </tbody>
+                                                </table>
+                      <h3>  Medicines Prescribed:</h3>
+                        <table class="table table-striped">
+                                
+                        <thead>
+                                        <tr>
+                                          <th>Medicine Name</th>
+                                          <th>Time to be taken</th>
+                                          <th></th>
+                                        </tr>
+                                      </thead>                        <tbody>
+            {% for med in meds %}
+                          <tr>
+                            <td>{{ med['name'] }}</td>
+                            <td>{{ med['time'] }}</td>
+                            <td></td>
+                          </tr>  
+            {% endfor %}
+<tr>
+        <form>
+                <td><input type="text" placeholder="Medicine Name">
+                <td><input type="text" placeholder="Time">           
+        </td>
+        <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> </button></td>
+
+        </form>
+</tr>
+        </tbody>
+
+        </table>
+                
+                </div>
+{% endblock %}

@@ -15,7 +15,7 @@ u1 = {'name': 'Ms. Shah',
       'pin': 'darsh',
       'DOB': '20-5-1960',
       'Age': '58',
-      'allergies': ['peanut', 'ThyPhenol'],
+      'allergies': ['peanuts, ThyPhenol'],
       'Blood Group': 'B+',
       'visits': [
           {'date': '11-8-2018',
@@ -41,12 +41,10 @@ u1 = {'name': 'Ms. Shah',
           },
 
           ],
-      'medtime': {
-          'night':  [{'name': 'RolFlax','reason': 'knee pain'}]
+      'meds': 
+         [ {'name': 'RolFlax','reason': 'knee pain', 'time': 'night'},
+                    {'name':'crocin', 'reason':'fever', 'time':'night'}]
 
-      }
-      
-      
       
     
       }

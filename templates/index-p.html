@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+               
+                        <span class="h1"> Hey , {{username}}</span>
+                        <hr>
+                      <h3>  Medicines to be taken:</h3>
+                        <table class="table table-striped">
+                                
+                        <thead>
+                                        <tr>
+                                          <th>Medicine Name</th>
+                                          <th>Time to be taken</th>
+                                        </tr>
+                                      </thead>                        <tbody>
+            {% for med in meds %}
+                          <tr>
+                            <td>{{ med['name'] }}</td>
+                            <td>{{ med['time'] }}</td>
+                          </tr>  
+            {% endfor %}
+        </tbody>
+        </table>
+                
+                </div>
+{% endblock %}

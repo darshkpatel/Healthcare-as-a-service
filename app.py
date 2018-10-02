@@ -31,21 +31,44 @@ def download_file(filename):
 def index():
     if not session.get('logged_in'):
         return render_template('login.html')
-    else:
-        return(render_template('index.html'))
-@app.route('/admin')
-def admin():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return(render_template('admin/index.html'))
-        
+    elif session['username']=='darsh':
+        meds =  user.find_one({'username':'darsh'})['meds']
+        return(render_template('index-p.html', username=session['username'], meds = meds))
+    elif session['username']=='doctor':
+        meds =  user.find_one({'username':'darsh'})['meds']
+        return(render_template('index-d.html', username=session['username'], meds = meds))
+
 @app.route('/chat')
 def chat():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         return(render_template('chat.html'))
+
+@app.route('/charts')
+def chart():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('charts.html'))
+
+@app.route('/past')
+def past():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('past.html'))
+@app.route('/api/update', methods=['POST'])
+def update():
+    username = 'darsh'
+    name = request.form['name']
+    time = request.form['time']
+    reason = request.form['reason']
+    old = user.find_one({'username':username})['meds']
+    old.append({'name': name, 'time': time, 'reason':reason})
+    user.update_one({'username':username} ,{'$set' : {'meds': old}})
+    return(jsonify({'Status': 'Success'}))
+
 
 @app.route('/login', methods=['POST','GET'])
 def login():
@@ -59,6 +82,8 @@ def login():
         else:
             return(render_template('login.html', error=True))
 
+
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -68,7 +93,7 @@ def logout():
 def api_meds(username, time):
     global user
     meds = user.find_one({'username':username})
-    meds['medtime'][time]
+    
     return jsonify(meds['medtime'][time][0])
 
  # WebSocket Routes 
