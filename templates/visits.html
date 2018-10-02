@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+               
+                        <span class="h1"> Hey , {{username}}</span>
+
+                      <h3>  Clinic Visits:</h3>
+                        <table class="table table-striped">
+                                
+                        <thead>
+                                        <tr>
+                                          <th>Date</th>
+                                          <th>Reason</th>
+                                          <th>medicines</th>
+                                          <th>cost</th>
+                                          <th>description</th>
+
+                                        </tr>
+                                      </thead>                        <tbody>
+            {% for v in visit %}
+                          <tr>
+                            <td>{{ v['date'] }}</td>
+                            <td>{{ v['reason'] }}</td>
+                            <td>{% for md in v['medicines'] %} {{ md }} &NonBreakingSpace; {% endfor %} </td>
+                            <td>{{ v['cost'] }}</td>
+                            <td>{{ v['description'] }}</td>
+                          </tr>  
+            {% endfor %}
+        </tbody>
+        </table>
+                
+                </div>
+{% endblock %}

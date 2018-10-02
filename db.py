@@ -15,7 +15,7 @@ u1 = {'name': 'Ms. Shah',
       'pin': 'darsh',
       'DOB': '20-5-1960',
       'Age': '58',
-      'allergies': ['peanuts, ThyPhenol'],
+      'allergies': 'peanuts, ThyPhenol',
       'Blood Group': 'B+',
       'visits': [
           {'date': '11-8-2018',
@@ -48,3 +48,5 @@ u1 = {'name': 'Ms. Shah',
       
     
       }
+
+user.insert_one(u1)

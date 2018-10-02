@@ -21,29 +21,29 @@
 
                                                         <tr>
                                                                 <td>Name</td>
-                                                                <td>Darsh</td>
+                                                                <td>{{ pt['username'] }}</td>
                                                                 
                                                         </tr>
 
                                                         <tr>
                                                                 <td>DOB</td>
-                                                                <td>20-5-1960</td>
+                                                                <td>{{ pt['DOB'] }}</td>
                                                                 
                                                         </tr>
 
                                                         <tr>
                                                                 <td>AGE</td>
-                                                                <td>58</td>
+                                                                <td>{{ pt['Age'] }}</td>
                                                                 
                                                         </tr>
                                                         <tr>
                                                                 <td>allergies</td>
-                                                                <td>peanuts, ThyPhenol</td>
+                                                                <td>{{ pt['allergies'] }}</td>
                                                                 
                                                         </tr>
                                                         <tr>
                                                                 <td>Blood Group</td>
-                                                                <td>B+</td>
+                                                                <td>{{ pt['Blood Group'] }}</td>
                                                                 
                                                         </tr>
 
@@ -63,15 +63,18 @@
                           <tr>
                             <td>{{ med['name'] }}</td>
                             <td>{{ med['time'] }}</td>
-                            <td></td>
+                            <form method="get" action="/api/remove/{{ med['name'] }}">  
+                        <td><button type='submit' class="btn btn-sm btn-danger" value="Submit">Remove Medicine</button></td>
+                
+                        </form>
                           </tr>  
             {% endfor %}
 <tr>
-        <form>
-                <td><input type="text" placeholder="Medicine Name">
-                <td><input type="text" placeholder="Time">           
+        <form method="post" action="/api/update">
+                <td><input type="input" name='name' placeholder="Medicine Name">
+                <td><input type="input" name='time' placeholder="Time">           
         </td>
-        <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> </button></td>
+        <td><button type='submit' class="btn btn-sm btn-primary" value="Submit">  Add Medicine  </button></td>
 
         </form>
 </tr>
