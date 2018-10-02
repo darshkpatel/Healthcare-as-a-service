@@ -69,18 +69,16 @@ def update():
     time = request.form['time']
    # reason = request.form['reason']
     old = user.find_one({'username':username})['meds']
-    old.append({'name': name, 'time': time, })
+    old.append({'name': name, 'time': time })
     user.update_one({'username':username} ,{'$set' : {'meds': old}})
     return(redirect(url_for('index')))
 @app.route('/api/updatevisit', methods=['POST'])
 def updatevisit():
     username = 'darsh'
-    name = request.form['name']
-    time = request.form['time']
    # reason = request.form['reason']
-    old = user.find_one({'username':username})['meds']
-    old.append({'name': name, 'time': time, })
-    user.update_one({'username':username} ,{'$set' : {'meds': old}})
+    old = user.find_one({'username':username})['visits']
+    old.append({'date':request.form['date'], 'reason':request.form['reason'], 'description':request.form['description'], 'medicines':[request.form['medicines']], 'cost': request.form['cost'], 'txn':request.form['txn']})
+    user.update_one({'username':username} ,{'$set' : {'visits': old}})
     return(redirect(url_for('index')))
 @app.route('/api/alexa', methods=['GET'])
 def alexa():
@@ -126,7 +124,7 @@ def block_verify():
         for x in range(1,len(blockchain)):
             if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):
                 return(render_template('block.html', t=str(blockchain[x].data['cost'])))
-        return(render_template('block.html',t=str(blockchain[1].data['txn'])))        
+        return(render_template('block.html',e='e'))        
             
        
 

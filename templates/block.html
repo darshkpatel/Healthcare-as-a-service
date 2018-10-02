@@ -8,10 +8,14 @@
                 <div class="alert alert-info">
                   Transaction ID Valid. <br>
                   Cost: {{ t }}
+                  Medicines: {{ m }}
                 </div>
-                
+                {% elif e %}
+                <div class="alert alert-warning">
+                                Transaction invalid
+                              </div>
                 {% endif %}
-                      <h3>  Verify Transaction :</h3>
+                      <h3>  Verify Transaction Id :</h3>
                         <table class="table">
                                 
                         <thead>

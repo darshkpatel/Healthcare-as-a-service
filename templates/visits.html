@@ -39,13 +39,13 @@
             {% if session['username'] == 'doctor' %}
             <tr>
                <!--  <form method="post" action="/api/updatevisit"> -->
-                <form method="post" action="">
+                <form method="post" action="/api/updatevisit">
                   <td><input type="input" name='date' placeholder="date">
                   <td><input type="input" name='reason' placeholder="reason"></td>
                   <td><input type="input" name='medicines' placeholder="medicines"></td>
                   <td><input type="input" name='cost' placeholder="cost"></td>
-                  <td><input type="input" name='cost' placeholder="description"></td>
-                  <td><input type="input" name='cost' placeholder="txn"></td>
+                  <td><input type="input" name='description' placeholder="description"></td>
+                  <td><input type="input" name='txn' placeholder="txn"></td>
                   <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> Submit  </button></td>
 
                 </form>
