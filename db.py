@@ -45,8 +45,8 @@ u1 = {'name': 'Ms. Shah',
 
           ],
       'meds': 
-         [ {'name': 'RolFlax','reason': 'knee pain', 'time': 'night'},
-                    {'name':'crocin', 'reason':'fever', 'time':'night'}]
+         [ {'name': 'RolFlax','reason': 'knee pain', 'time': 'afternoon'},
+                    {'name':'crocin', 'reason':'fever', 'time':'afternoon'}]
 
       
     
