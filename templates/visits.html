@@ -8,7 +8,7 @@
 {% block body %}
 <div class="container-fluid">
                
-                        <span class="h1"> Hey , {{username}}</span>
+                        <span class="h1"> Hey  {{username}}</span>
 
                       <h3>  Clinic Visits:</h3>
                         <table class="table table-striped">
@@ -21,6 +21,7 @@
                                           <th>cost</th>
                                           <th>description</th>
                                           <th>T-ID</th>
+                                          <th></th>
 
                                         </tr>
                                       </thead>                        <tbody>
@@ -32,8 +33,24 @@
                             <td>{{ v['cost'] }}</td>
                             <td>{{ v['description'] }}</td>
                             <td>{{ v['txn'] }}</td>
+                            <td></td>
                           </tr>  
             {% endfor %}
+            {% if session['username'] is doctor %}
+            <tr>
+               <!--  <form method="post" action="/api/updatevisit"> -->
+                <form method="post" action="">
+                  <td><input type="input" name='date' placeholder="date">
+                  <td><input type="input" name='reason' placeholder="reason"></td>
+                  <td><input type="input" name='medicines' placeholder="medicines"></td>
+                  <td><input type="input" name='cost' placeholder="cost"></td>
+                  <td><input type="input" name='cost' placeholder="description"></td>
+                  <td><input type="input" name='cost' placeholder="txn"></td>
+                  <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> Submit  </button></td>
+
+                </form>
+              </tr>  
+              {% endif %}
         </tbody>
         </table>
                 

@@ -72,6 +72,16 @@ def update():
     old.append({'name': name, 'time': time, })
     user.update_one({'username':username} ,{'$set' : {'meds': old}})
     return(redirect(url_for('index')))
+@app.route('/api/updatevisit', methods=['POST'])
+def updatevisit():
+    username = 'darsh'
+    name = request.form['name']
+    time = request.form['time']
+   # reason = request.form['reason']
+    old = user.find_one({'username':username})['meds']
+    old.append({'name': name, 'time': time, })
+    user.update_one({'username':username} ,{'$set' : {'meds': old}})
+    return(redirect(url_for('index')))
 @app.route('/api/alexa', methods=['GET'])
 def alexa():
     username = 'darsh'

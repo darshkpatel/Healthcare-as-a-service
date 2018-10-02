@@ -52,4 +52,6 @@ u1 = {'name': 'Ms. Shah',
     
       }
 user.delete_one({'username':'darsh'})
+user.delete_one({'username':'doctor'})
+user.insert_one({'username':'doctor', 'pin':'doctor'})
 user.insert_one(u1)
