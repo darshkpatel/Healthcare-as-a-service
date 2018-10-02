@@ -79,7 +79,9 @@ def updatevisit():
     old = user.find_one({'username':username})['visits']
     old.append({'date':request.form['date'], 'reason':request.form['reason'], 'description':request.form['description'], 'medicines':[request.form['medicines']], 'cost': request.form['cost'], 'txn':request.form['txn']})
     user.update_one({'username':username} ,{'$set' : {'visits': old}})
-    return(redirect(url_for('index')))
+    generate()
+    return(redirect(url_for('past')))
+
 @app.route('/api/alexa', methods=['GET'])
 def alexa():
     username = 'darsh'
