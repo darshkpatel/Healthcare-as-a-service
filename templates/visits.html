@@ -1,10 +1,5 @@
 {% extends "base.html" %}
 
-{% block head %}
-<script src="http://www.chartjs.org/dist/2.7.2/Chart.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-{% endblock %}
-
 {% block body %}
 <div class="container-fluid">
                
@@ -14,7 +9,7 @@
                         <table class="table table-striped">
                                 
                         <thead>
-                                        <tr>
+                               <tr>
                                           <th>Date</th>
                                           <th>Reason</th>
                                           <th>medicines</th>
@@ -23,8 +18,9 @@
                                           <th>T-ID</th>
                                           <th></th>
 
-                                        </tr>
-                                      </thead>                        <tbody>
+                              </tr>
+                        </thead> 
+                              <tbody>
             {% for v in visit %}
                           <tr>
                             <td>{{ v['date'] }}</td>
@@ -38,7 +34,6 @@
             {% endfor %}
             {% if session['username'] == 'doctor' %}
             <tr>
-               <!--  <form method="post" action="/api/updatevisit"> -->
                 <form method="post" action="/api/updatevisit">
                   <td><input type="input" name='date' placeholder="date">
                   <td><input type="input" name='reason' placeholder="reason"></td>
@@ -52,7 +47,6 @@
               </tr>  
               {% endif %}
         </tbody>
-        </table>
-                
+        </table>  
                 </div>
 {% endblock %}

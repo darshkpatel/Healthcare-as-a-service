@@ -29,7 +29,12 @@ def download_file(filename):
 
 
 
+
+
  URL ROUTES 
+
+
+
 
 
 
@@ -143,7 +148,7 @@ def blockchain():
     return(jsonify(data))
 
 
-#Verifies Existance in Blockchain 
+# Verifies Existance in Blockchain 
 @app.route('/block', methods=['GET', 'POST'])
 def block_verify():
     if request.method=='GET':
@@ -184,7 +189,6 @@ def api_meds(username, time):
 
 """
 
- # WebSocket Routes 
 @socketio.on('connect', namespace='/test')
 def test_connect():
     emit('cnct', {'msg': str( session['username']) })
