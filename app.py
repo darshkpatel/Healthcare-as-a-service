@@ -159,6 +159,12 @@ def block_verify():
             if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):  # verifies blockchain integrity 
                 return(render_template('block.html', t=dict(blockchain[x].data), bhash=blockchain[x].hash, bindex=blockchain[x].index))
         return(render_template('block.html', e='e'))        
+@app.route('/api/block/<string:txid>', methods=['GET'])
+def block_verify_api(txid):
+    for x in range(1,len(blockchain)):
+        if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):  # verifies blockchain integrity 
+            return(jsonify({'status':'valid','data':dict(blockchain[x].data),'hash':blockchain[x].hash,'index':blockchain[x].index}))
+    return(jsonify({'status':'invalid'}))        
             
        
 
