@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block head %}
+<script src='https://meet.jit.si/external_api.js'></script>
+<meta id="username" data-name="{{username}}">
+
+{% endblock %}
+
+
+{% block body %}
+        <style>
+            .jumbotron { 
+                background-color: rgb(244, 194, 30); /* Orange */
+                color: #ffffff;
+            }
+            </style>
+            
+            <body>
+                <div id="username" > </div>
+              <div class="jumbotron text-center">
+                <h1>Medi-Chat</h1> 
+                <div class="row">
+                        <div class="col-md-4 col-md-offset-4"></div>
+                <div class="col-md-4 col-md-offset-4">
+                    <div id="meet"></div>
+
+                    </div>
+              </div></div>
+              <br>
+              <script>
+                var domain = "meet.jit.si";
+                var options = {
+                    roomName: "TeamMediX00",
+                    width: 800,
+                    height: 400,
+                    parentNode: document.querySelector('#meet'),
+                    configOverwrite: {},
+                    interfaceConfigOverwrite: {HIDE_INVITE_MORE_HEADER: true},
+                    userInfo: {
+                        displayName: document.querySelector('#username').dataset.name
+                    }
+                }
+                var api = new JitsiMeetExternalAPI(domain, options);
+            </script>
+
+              <!-- <iframe allow="camera; microphone; display-capture" src="https://meet.jit.si/TeamMediX00" allowfullscreen="true" style="height: 400px; width: 100%; border: 0px;"></iframe> -->
+{% endblock %}
+</html>

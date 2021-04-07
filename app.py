@@ -63,6 +63,14 @@ def chat():
         return(render_template('chat.html'))
 
 
+@app.route('/vc')
+def vc():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('vc.html', username=session['username']))
+
+
 # Charts
 @app.route('/charts')
 def chart():
