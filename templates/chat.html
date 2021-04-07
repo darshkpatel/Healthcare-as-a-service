@@ -2,7 +2,7 @@
 {% block head %}
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+    var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port + '/test');
     socket.on('cnct', function(data) {
         $('#status').append('Connected as '+data.msg);
         console.log('connected');
