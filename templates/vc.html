@@ -22,26 +22,10 @@
                         <div class="col-md-4 col-md-offset-4"></div>
                 <div class="col-md-4 col-md-offset-4">
                     <div id="meet"></div>
-
+                    <iframe src="https://dyte-medix.herokuapp.com/participant?meetingId=465d2e29-71d5-49bf-9a5d-8fb6b88cfdc4&roomName=slow-mandrill" allow="camera;microphone" height="900px" width="500px">
                     </div>
               </div></div>
               <br>
-              <script>
-                var domain = "meet.jit.si";
-                var options = {
-                    roomName: "TeamMediX00",
-                    width: 800,
-                    height: 400,
-                    parentNode: document.querySelector('#meet'),
-                    configOverwrite: {},
-                    interfaceConfigOverwrite: {HIDE_INVITE_MORE_HEADER: true},
-                    userInfo: {
-                        displayName: document.querySelector('#username').dataset.name
-                    }
-                }
-                var api = new JitsiMeetExternalAPI(domain, options);
-            </script>
 
-              <!-- <iframe allow="camera; microphone; display-capture" src="https://meet.jit.si/TeamMediX00" allowfullscreen="true" style="height: 400px; width: 100%; border: 0px;"></iframe> -->
 {% endblock %}
 </html>
