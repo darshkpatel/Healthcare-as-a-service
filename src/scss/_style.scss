@@ -1,0 +1,158 @@
+$top-bar-height:70px;
+$inactive-color:#757575;
+$theme-color:#278BED;
+$theme-light:#D6ECFE;
+
+$light-border: 1.4px solid #F6F6F8;
+$box-shadow-one:0px 2px 8px rgba(0, 0, 0, 0.08);
+$box-shadow-two:0px 4px 8px rgba(0, 0, 0, 0.08);
+
+$red-bg: #CC1616;
+$purple-bg: #7B00FF;
+$green-bg:#2FB300;
+$blue-bg:#278BED;
+
+$ease-animation: 0.4s ease-in-out;
+
+h1,h2,h3,h4,h5,h6,p{margin-bottom:0;}
+body{font-family: 'Poppins', sans-serif !important;}
+
+.sidebar{
+    width:240px; 
+    border-right:$light-border;
+    height:100vh;
+    // padding:0 40px;
+    display:flex; flex-direction:column; justify-content: space-between;
+
+    .logo-container{
+        height:$top-bar-height;
+    }
+
+    .navigation-links-container
+    {
+        height:200px;
+
+        a{color:$inactive-color;}
+        .nav-button{
+            height:50px; line-height:50px; display:flex; flex-direction:row; color:$inactive-color;padding:0 35px; font-family: 'Poppins', sans-serif; font-weight:400; cursor:pointer;
+            svg{margin-right:13px; margin-top:13px;}
+
+            &:active, &:hover, &:focus, &.active{
+                background-color:$theme-light; color:$theme-color; font-weight: 500; border-right:3px solid $theme-color;
+
+                svg path{fill:$theme-color;}
+            }
+        }
+    }
+}
+
+.medium-cell-block-y{overflow-x:hidden;}
+.dynamic-content-wrap{
+    width: calc(100vw - 240px);
+    overflow-x:none;
+    background-color:#F6F7FB;
+}
+#top-bar{
+    background-color:white; height:$top-bar-height;
+    display:flex; flex-direction:row; justify-content: right; padding:0 35px; line-height:$top-bar-height; box-shadow:$box-shadow-two; 
+
+    .alert-wrap{
+        svg{margin-top:23px;margin-right:23px;}
+    }
+
+    .profile-details-wrap{
+        display:flex; flex-direction:row;
+        .avatar{width:40px; height:40px; margin-top:15px; border-radius:20px; margin-right:10px; background-color:green;}
+        .name{line-height:$top-bar-height; font-weight:500; text-transform: uppercase;}
+    }
+}
+
+.appointment-group{
+    .date-bar{
+        height:50px; line-height:50px; padding:0 20px;
+        p{line-height: inherit;
+            span{color:$inactive-color; font-size:14px; }
+        }
+    }
+
+    .upcoming-appointments{padding:0 0 0 20px;}
+    .owl-item{margin-right:0 !important;padding:50px 10px !important;}
+
+    .appointment-block-wrap{
+        height:160px; background-color:white; border-radius:15px; width:320px; box-shadow:$box-shadow-one; color:white; position:relative; transition:$ease-animation; top:0;
+
+        .overlay-above-button{background-color:inherit; position:relative;z-index:1; padding:15px 0; border-radius:15px; top:0;}
+        .block-top-part{
+            padding:0 25px; 
+            h3{font-weight:600;margin:0;}
+        }
+
+        .block-bottom-part{
+            display:flex; flex-direction:row; justify-content: space-between; padding:0 25px;
+            .time{font-size:25px; font-weight:600}
+            .date{font-size:20px; line-height:44px;}
+        }
+
+        .see-details-button{
+            height:50px; line-height:50px; background-color:rgba(0, 0, 0, 0.1); color:white; padding:0 25px; width:100%; position:absolute; bottom:0;border-radius:0 0 15px 15px; transition:$ease-animation; cursor:pointer;
+            
+            &:hover{font-weight:500;}
+        }
+
+        &:hover{
+            height:210px;
+            transition:$ease-animation;
+            top:-25px;
+        }
+
+
+        &.routine-checkup{
+            background-color:$red-bg;
+        }
+
+        &.sick-visit{
+            background-color: $purple-bg;
+        }
+
+        &.vaccination{
+            background-color: $blue-bg;
+        }
+
+        &.mental-health{
+            background-color: $green-bg;
+        }
+    }
+}
+
+.tiles-wrap{
+
+    .tile{
+        padding:30px 40px; border-radius:15px; background-color:white; box-shadow: $box-shadow-two; margin:15px 0;
+
+        h3{font-size:24px; font-weight:500;} 
+        p{color:$inactive-color; margin-bottom:5px;}
+    }
+
+    .cta{
+        border-radius:15px; height:100px; font-size:20px; font-weight:500; padding:0 50px; background: linear-gradient(95.58deg, #FF5483 4.98%, #FFAE0C 87.88%); color:white;
+        display:flex; flex-direction:row; box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);; margin-top:30px; justify-content: space-between;
+
+        a{padding: 0px 25px; height:40px; border-radius:8px; background-color:black; color:white;line-height:40px; margin-top:30px; display:block;}
+
+        p{line-height:100px;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
+    }
+
+    .medicine-reminder{
+        .appointment-details{
+            padding:25px; border-radius:15px; box-shadow: $box-shadow-two; color:white; margin-top:20px;
+
+            &.routine-checkup{background-color:$red-bg;}
+        }
+    }
+}
+
+.perk-bar{
+    min-height:80px; border-radius:15px; box-shadow: $box-shadow-two; margin:10px 0; display:flex; flex-direction:row; background-color:white; padding:20px 0;
+
+    &.for-prescriptions div.column{min-width:100px; flex:1 1 1 2 1; padding:0 20px;}
+}

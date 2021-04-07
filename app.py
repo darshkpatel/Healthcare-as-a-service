@@ -46,11 +46,13 @@ def index():
         return render_template('login.html')
     elif session['username']=='darsh':
         meds =  user.find_one({'username':'darsh'})['meds']
-        return(render_template('index-p.html', username=session['username'], meds = meds)) #medicine table 
+        return(render_template('patient-dashboard.html', username=session['username'], meds = meds)) #medicine table 
     elif session['username']=='doctor':
         pt = user.find_one({'username':'darsh'})
         meds =  pt['meds']
-        return(render_template('index-d.html', username=session['username'], meds = meds, pt=pt)) #medicines and paitent detailss 
+        return(render_template('index.html', username=session['username'], meds = meds, pt=pt)) #medicines and paitent detailss 
+# def index():
+#     return(render_template('index.html'))
 
 
 #P2P Chat
@@ -61,6 +63,30 @@ def chat():
         return render_template('login.html')
     else:
         return(render_template('chat.html'))
+@app.route('/patient-list')
+def pat_list():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return(render_template('paitent-list.html'))
+
+@app.route('/prescriptions')
+def presc():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        pt = user.find_one({'username':'darsh'})
+        visits = pt['visits']
+        return(render_template('prescriptions.html',visits=visits))
+        
+@app.route('/symptoms')
+def symptoms():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        pt = user.find_one({'username':'darsh'})
+        visits = pt['visits']
+        return(render_template('symptoms.html',visits=visits))
 
 
 # Charts
@@ -74,14 +100,16 @@ def chart():
 
 
 # Historical Records
-@app.route('/past')
+@app.route('/patient-profile')
 def past():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         pt = user.find_one({'username':'darsh'})
         visits = pt['visits']
-        return(render_template('visits.html',visit=visits,username=session['username']  ))
+
+        print('visits',visits)
+        return(render_template('patient-profile.html',visit=visits,username=session['username'],pt=pt  ))
 
 
 
@@ -110,7 +138,7 @@ def updatevisit():
 
 
 # Send prescribed apps , Alexa Endpoint 
-@app.route('/api/alexa', methods=['GET'])
+@app.route('/api/alexa/', methods=['GET'])
 def alexa():
     username = 'darsh'
     meds = user.find_one({'username':username})['meds']
@@ -148,17 +176,26 @@ def blockchain():
     return(jsonify(data))
 
 
+
+@app.route('/verify', methods=['GET'])
+def verify():
+    if request.method=='GET':
+        return(render_template('verify.html'))
+
 # Verifies Existance in Blockchain 
 @app.route('/block', methods=['GET', 'POST'])
 def block_verify():
     if request.method=='GET':
-        return(render_template('block.html'))
+        return(render_template('verify.html'))
     else:
         txid = request.form['tid']
+        print("got tid", txid)
         for x in range(1,len(blockchain)):
-            if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):  # verifies blockchain integrity 
-                return(render_template('block.html', t=dict(blockchain[x].data), bhash=blockchain[x].hash, bindex=blockchain[x].index))
-        return(render_template('block.html', e='e'))        
+            if blockchain[x].data['txn']==txid and verify_blockchain(blockchain):  
+                print(blockchain[x].data['txn'])
+                # verifies blockchain integrity 
+                return(render_template('verify.html', t=dict(blockchain[x].data), bhash=blockchain[x].hash, bindex=blockchain[x].index))
+        return(render_template('verify.html', e='e'))        
 @app.route('/api/block/<string:txid>', methods=['GET'])
 def block_verify_api(txid):
     for x in range(1,len(blockchain)):
