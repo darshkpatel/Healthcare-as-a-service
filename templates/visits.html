@@ -1,52 +1,74 @@
 {% extends "base.html" %}
-
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+{% for v in visit %}
+<meta id="tx_no-{{loop.index}}" data-name="{{ v['txn'] }}">
+{% endfor %}
+{% endblock %}
 {% block body %}
 <div class="container-fluid">
-               
-                        <span class="h3"> Hey  {{username}}</span>
-<hr>
-                      <h3>  Clinic Visits:</h3>
-                        <table class="table table-striped">
-                                
-                        <thead>
-                               <tr>
-                                          <th>Date</th>
-                                          <th>Reason</th>
-                                          <th>medicines</th>
-                                          <th>cost</th>
-                                          <th>description</th>
-                                          <th>T-ID</th>
-                                          <th></th>
 
-                              </tr>
-                        </thead> 
-                              <tbody>
-            {% for v in visit %}
-                          <tr>
-                            <td>{{ v['date'] }}</td>
-                            <td>{{ v['reason'] }}</td>
-                            <td>{% for md in v['medicines'] %} {{ md }} &NonBreakingSpace; {% endfor %} </td>
-                            <td>{{ v['cost'] }}</td>
-                            <td>{{ v['description'] }}</td>
-                            <td>{{ v['txn'] }}</td>
-                            <td></td>
-                          </tr>  
-            {% endfor %}
-            {% if session['username'] == 'doctor' %}
-            <tr>
-                <form method="post" action="/api/updatevisit">
-                  <td><input type="input" name='date' placeholder="date" value="{{ date }}">
-                  <td><input type="input" name='reason' placeholder="reason"></td>
-                  <td><input type="input" name='medicines' placeholder="medicines"></td>
-                  <td><input type="input" name='cost' placeholder="cost"></td>
-                  <td><input type="input" name='description' placeholder="description"></td>
-                  <td><input type="input" name='txn' placeholder="txn" value="{{ txid }}"></td>
-                  <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> Submit  </button></td>
+  <span class="h3"> Hey {{username}}</span>
+  <hr>
+  <h3> Clinic Visits:</h3>
+  <table class="table table-striped">
 
-                </form>
-              </tr>  
-              {% endif %}
-        </tbody>
-        </table>  
-                </div>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>medicines</th>
+        <th>cost</th>
+        <th>description</th>
+        <th>T-ID</th>
+        <th></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for v in visit %}
+      <tr>
+        <td>{{ v['date'] }}</td>
+        <td>{{ v['reason'] }}</td>
+        <td>{% for md in v['medicines'] %} {{ md }} &NonBreakingSpace; {% endfor %} </td>
+        <td>{{ v['cost'] }}</td>
+        <td>{{ v['description'] }}</td>
+        <td id='txid-{{loop.index}}'>{{ v['txn'] }}</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+      {% if session['username'] == 'doctor' %}
+      <tr>
+        <form method="post" action="/api/updatevisit">
+          <td><input type="input" name='date' placeholder="date" value="{{ date }}">
+          <td><input type="input" name='reason' placeholder="reason"></td>
+          <td><input type="input" name='medicines' placeholder="medicines"></td>
+          <td><input type="input" name='cost' placeholder="cost"></td>
+          <td><input type="input" name='description' placeholder="description"></td>
+          <td><input type="input" name='txn' placeholder="txn" value="{{ txid }}"></td>
+          <td><button type='submit' class="btn btn-sm btn-primary" value="Submit"> Submit </button></td>
+
+        </form>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  var nodes = document.querySelectorAll("[id^='txid']")
+  nodes.forEach((node) => {
+    console.log(node.innerText);
+    new QRCode(node, {
+      text: node.innerText,
+      width: 128,
+      height: 128,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+  })
+
+</script>
 {% endblock %}
