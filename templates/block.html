@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.0.1/html5-qrcode.min.js" integrity="sha512-JXdlXFkKGAhP2yUubNT7hXNjEtPrAJz1Gs7oztdP47KhqL5ux88uof5FnIm2D0Ud/TdqiAe1mM1179kJDy/HKA==" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block body %}
 
@@ -34,17 +36,33 @@
                                       </thead>                        <tbody>
 
 <tr>
-        <form method="post" action="./block">
-                <td><input type="input" name='tid' placeholder="Transaction ID">
+        <form method="post" action="./block" id='txform'>
+                <td><input type="input" name='tid' id='txid' placeholder="Transaction ID">
          
 
         <td><button type='submit' class="btn btn-sm btn-primary" value="Submit">  Verify  </button></td>
 
         </form>
+        <div id="reader" width="600px"></div>
+
 </tr>
         </tbody>
 
         </table>
       </div>         </div>
                 </div>
+
+                <script>
+const html5QrCode = new Html5Qrcode("reader");
+const qrCodeSuccessCallback = message => { 
+  	console.log(`QR matched = ${message}`);
+  document.querySelector('#txid').value = message
+  document.querySelector('#txform').submit()}
+const config = { fps: 10, qrbox: 250 };
+
+
+// If you want to prefer back camera
+html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+                </script>
 {% endblock %}
