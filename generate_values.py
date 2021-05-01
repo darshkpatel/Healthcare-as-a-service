@@ -20,19 +20,19 @@ u1 = {'name': 'Ms. Shah',
       'visits': [
           {'date': '11-8-2018',
            'reason': 'Ankle Pain',
-           'description': 'Long description on doctors analysis and conclusion',
+           'description': 'Allow Opiods for pain. PT Ankle Hairline Crack',
            'medicines': ['crocin', 'metaflax'],
 
            'cost': '800',
-           'txn': 'abcd'
+           'txn': '12198462167264047'
           },
           {'date': '18-7-2018',
            'reason': 'Stomach Upset',
-           'description': 'Long description on doctors analysis and conclusion',
+           'description': 'Food Poisoning, RMT Blood R-Cell LOW',
            'medicines': ['Roflax'],
 
            'cost': '760',
-           'txn': 'asas'
+           'txn': '16198462167264047'
           },
           {'date': '1-1-2018',
            'reason': 'Cataract Surgery',
@@ -40,7 +40,7 @@ u1 = {'name': 'Ms. Shah',
            'medicines': ['Roflax'],
 
            'cost': '13000',
-           'txn': 'axax'
+           'txn': '16198432167264047'
           },
 
           ],

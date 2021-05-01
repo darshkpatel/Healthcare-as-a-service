@@ -5,6 +5,8 @@ import pymongo
 import os
 import hashlib as hasher
 import datetime
+import time
+from datetime import date
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -89,7 +91,14 @@ def past():
     else:
         pt = user.find_one({'username':'darsh'})
         visits = pt['visits']
-        return(render_template('visits.html',visit=visits,username=session['username']  ))
+        today = date.today()
+
+        return(render_template('visits.html',
+        visit=visits,
+        username=session['username'], 
+        date = today.strftime("%d-%m-%Y") ,
+        txid = str(time.time()).replace('.','')
+         ))
 
 
 
